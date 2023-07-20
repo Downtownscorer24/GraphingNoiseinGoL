@@ -10,7 +10,9 @@ COLOR_DIE_NEXT = (170, 170, 170)
 COLOR_ALIVE_NEXT = (255, 255, 255)
 COLOR_DEAD = (0, 0, 0)
 
-noise = 0.01
+birth_prob = 0.01
+survival_prob = 0.01
+death_prob = 0.01
 
 def update(screen, cells, size, with_progress=False):
     n_rows, n_cols = cells.shape
@@ -33,24 +35,18 @@ def update(screen, cells, size, with_progress=False):
 
         color = COLOR_BG if cells[row, col] == 0 else COLOR_ALIVE_NEXT
 
-        # "noise" modification
-        if random.random() < noise:
-            if random.random() < 0.5:
-                alive = max(0, alive - 1)  # ensure alive neighbors can't be less than 0
-            else:
-                alive += 1
-
         if cells[row, col] == 1:
-            if alive < 2 or alive > 3 :
+            if alive < 2 or alive > 3 or random.random() < death_prob :
                 updated_cells[row, col] = 0
                 if with_progress:
                     color = COLOR_DIE_NEXT
-            elif 2 <= alive <= 3 :
+
+            elif 2 <= alive <= 3 or random.random() < survival_prob :
                 updated_cells[row, col] = 1
                 if with_progress:
                     color = COLOR_ALIVE_NEXT
         else:
-            if alive == 3 :
+            if alive == 3 or random.random() < birth_prob:
                 updated_cells[row, col] = 1
                 if with_progress:
                     color = COLOR_ALIVE_NEXT
@@ -82,8 +78,9 @@ def main():
     configuring = True
     cell_deactivation = False
     trials = 0
-    generations = [0] * 5
+    generations = [0]*5
     percent_alive = [[] for _ in range(5)]
+
 
     while trials < 5:
         for event in pygame.event.get():
@@ -135,15 +132,15 @@ def main():
     ax1.set_title("Percentage of Cells Alive Across Generations")
     ax1.set_xlabel("Generations")
     ax1.set_ylabel("Percentage of Cells Alive (%)")
-
     # Add dummy lines for one_less and one_more to the legend
-    noise_legend = plt.Line2D((0, 1), (0, 0), color='white')  # this line is for the legend, not to be plotted
-
+    birth_prob_legend = plt.Line2D((0, 1), (0, 0), color='white')  # this line is for the legend, not to be plotted
+    survival_prob_legend = plt.Line2D((0, 1), (0, 0), color='white')  # this line is for the legend, not to be plotted
+    death_prob_legend = plt.Line2D((0, 1), (0, 0), color='white')  # this line is for the legend, not to be plotted
 
     # Update the legend position
-    ax1.legend([noise_legend] + [line for line in ax1.lines],
-               [f'noise: {noise}'] + [f'Run {run + 1}' for run in
-                                                                     range(len(percent_alive))], loc= (1.04,1))
+    ax1.legend([birth_prob_legend, survival_prob_legend, death_prob_legend] + [line for line in ax1.lines],
+               [f'birth_prob: {birth_prob}', f'survival_prob: {survival_prob}', f'death_prob: {death_prob}'] + [f'Run {run + 1}' for run in
+                                                                     range(len(percent_alive))], loc=(1.04, 1))
 
     ax1.grid(True)
 
@@ -154,6 +151,5 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
 
