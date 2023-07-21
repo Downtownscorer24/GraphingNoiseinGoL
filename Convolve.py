@@ -3,6 +3,7 @@ import numpy as np
 import itertools
 import random
 from concurrent.futures import ProcessPoolExecutor
+from scipy.ndimage import convolve
 import csv
 import io
 
@@ -26,41 +27,23 @@ def binary_matrix_to_decimal(matrix):
 
     return decimal
 def update(cells):
-    n_rows, n_cols = cells.shape
-    updated_cells = np.zeros_like(cells)
+    kernel = np.array([[1, 1, 1],
+                       [1, 0, 1],
+                       [1, 1, 1]])
 
-    for row, col in np.ndindex(cells.shape):
-        alive = 0
+    alive = convolve(cells, kernel, mode='constant', cval=0)
 
-        # Calculate neighbor indices considering cut-off edges
-        for i in range(-1, 2):
-            for j in range(-1, 2):
-                if i == 0 and j == 0:
-                    continue
-                neighbor_row = row + i
-                neighbor_col = col + j
+    # "noise" modification
+    is_noised = np.random.random(cells.shape) < noise
+    noise_values = np.random.choice([-1, 1], size=cells.shape)
+    noise_values *= is_noised
+    alive = np.clip(alive + noise_values, 0, None)  # ensure alive neighbors can't be less than 0
 
-                # Check if neighbor indices are within the grid bounds
-                if 0 <= neighbor_row < n_rows and 0 <= neighbor_col < n_cols:
-                    alive += cells[neighbor_row, neighbor_col]
-
-        # "noise" modification
-        if random.random() < noise:
-            if random.random() < 0.5:
-                alive = max(0, alive - 1)  # ensure alive neighbors can't be less than 0
-            else:
-                alive += 1
-
-        if cells[row, col] == 1:
-            if alive < 2 or alive > 3 :
-                updated_cells[row, col] = 0
-            elif 2 <= alive <= 3 :
-                updated_cells[row, col] = 1
-        else:
-            if alive == 3 :
-                updated_cells[row, col] = 1
+    updated_cells = np.where(((cells == 1) & ((alive < 2) | (alive > 3))) |
+                             ((cells == 0) & (alive != 3)), 0, 1)
 
     return updated_cells
+
 
 def process_combination(combination):
     sums = []
