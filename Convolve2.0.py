@@ -7,7 +7,7 @@ from scipy.ndimage import convolve
 import csv
 import io
 
-noise = 0.05
+noise = 0.5
 n_trials = 20
 n_generations = 250
 
@@ -62,7 +62,11 @@ def process_combination(combination):
     mean = np.mean(sums)
     std_dev = np.std(sums)
 
-    return {"combination": combination, "mean": mean, "std_dev": std_dev}
+    # Add a small constant to the denominator to prevent division by zero
+    epsilon = 1e-7
+    cv = std_dev/(mean + epsilon)
+
+    return {"combination": combination,"noise level": noise, "mean": mean, "std_dev": std_dev, "cv": cv}
 
 def main():
     start_time = time.time()
@@ -74,27 +78,17 @@ def main():
     end_time = time.time()
     print(f"Time taken to run the function: {end_time - start_time} seconds")
 
-    # Use StringIO object as file
-    output = io.StringIO()
+    # Open (or create) a csv file in write mode
+    with open(f"noise={noise}.csv", 'w', newline='') as file:
+        writer = csv.writer(file)
 
-    writer = csv.writer(output)
+        # Write headers
+        writer.writerow(["Combination", "Noise Level", "Mean", "Std Dev", "CV"])
 
-    # Write headers
-    writer.writerow(["Combination", "Mean", "Std Dev"])
-
-    # Write data
-    for result in results:
-        combination_decimal = binary_matrix_to_decimal(result['combination'])
-        writer.writerow([combination_decimal, result['mean'], result['std_dev']])
-
-    # Get the CSV content
-    csv_content = output.getvalue()
-
-    # Close the StringIO object
-    output.close()
-
-    # Print the CSV content
-    print(csv_content)
+        # Write data
+        for result in results:
+            combination_decimal = binary_matrix_to_decimal(result['combination'])
+            writer.writerow([combination_decimal, result['noise level'], result['mean'], result['std_dev'], result['cv']])
 
 if __name__ == '__main__':
     main()
