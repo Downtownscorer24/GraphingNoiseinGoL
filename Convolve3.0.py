@@ -6,13 +6,15 @@ from concurrent.futures import ProcessPoolExecutor
 from scipy.ndimage import convolve
 import csv
 import io
+import multiprocessing
 
-n_trials = 20
-n_generations = 250
+n_trials = 32
+n_generations = 256
+grid_size = 64
 
 # Generate all possible 3x3 combinations
 combinations = list(itertools.product([0, 1], repeat=9))
-combinations = [np.array(comb).reshape((3, 3)) for comb in combinations[:16]]  # Only first 16 combinations
+combinations = [np.array(comb).reshape((3, 3)) for comb in combinations]
 
 def binary_matrix_to_decimal(matrix):
     # Flatten the matrix into a 1D array
@@ -48,11 +50,11 @@ def process_combination(params):
     combination, noise = params
     sums = []
     for _ in range(n_trials):
-        # Create a 59x59 grid of zeros
-        cells = np.zeros((59, 59))
+        # Create a 64x64 grid of zeros
+        cells = np.zeros((grid_size, grid_size))
 
         # Place the 3x3 combination in the middle of the 59x59 grid
-        start_row = start_col = (59 - 3) // 2
+        start_row = start_col = (grid_size - 3) // 2
         cells[start_row:start_row + 3, start_col:start_col + 3] = combination
 
         for _ in range(n_generations):
@@ -72,10 +74,13 @@ def main():
     start_time = time.time()
 
     all_results = []
+
+    num_cpus = multiprocessing.cpu_count()  # get number of VCPUs
+
     noise_values = np.arange(0, 1.01, 0.01)  # noise values from 0 to 1 in increments of 0.01
     for noise in noise_values:
         params = [(comb, noise) for comb in combinations]
-        with ProcessPoolExecutor(max_workers=8) as executor:
+        with ProcessPoolExecutor(max_workers=num_cpus) as executor:
             results = list(executor.map(process_combination, params))
         all_results.extend(results)
 
