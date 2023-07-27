@@ -14,7 +14,7 @@ grid_size = 64
 
 # Generate all possible 3x3 combinations
 combinations = list(itertools.product([0, 1], repeat=9))
-combinations = [np.array(comb).reshape((3, 3)) for comb in combinations]
+combinations = [np.array(comb).reshape((3, 3)) for comb in combinations[:4]]
 
 def binary_matrix_to_decimal(matrix):
     # Flatten the matrix into a 1D array
@@ -88,16 +88,16 @@ def main():
     print(f"Time taken to run the function: {end_time - start_time} seconds")
 
     # Open (or create) a csv file in write mode
-    with open("output.csv", 'w', newline='') as file:
+    with open("output1.csv", 'w', newline='') as file:
         writer = csv.writer(file)
 
         # Write headers
-        writer.writerow(["Combination", "Noise Level", "Mean", "Std Dev", "CV"])
+        writer.writerow(["Noise Level","Combination", "Mean", "Std Dev", "CV"])
 
         # Write data
         for result in all_results:
             combination_decimal = binary_matrix_to_decimal(result['combination'])
-            writer.writerow([combination_decimal, result['noise level'], result['mean'], result['std_dev'], result['cv']])
+            writer.writerow([ result['noise level'], combination_decimal, result['mean'], result['std_dev'], result['cv']])
 
 if __name__ == '__main__':
     main()
