@@ -67,12 +67,6 @@ def main():
     cells = np.zeros((60, 80))
     initial_config = None
 
-    cells[29,39] = 1
-    cells[29,40] = 1
-    cells[30,40] = 1
-    cells[30,41] = 1
-    cells[31,40] = 1
-
     screen.fill(COLOR_GRID)
     update(screen, cells, 10)
 

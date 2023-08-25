@@ -1,7 +1,5 @@
-# This is a normal version of the game of life
-# Click cells to make alive and set initial configuration
-# Press 'd' if you want to shift into setting cells dead. Make sure to click 'd' again to switch to setting cells alive
-# The borders are unwrapped, meaning that the cells on one edge won't interact with cells on the other edge
+# Only modification to this version is that
+
 import time
 import pygame
 import numpy as np
@@ -11,6 +9,8 @@ COLOR_GRID = (40, 40, 40)
 COLOR_DIE_NEXT = (170, 170, 170)
 COLOR_ALIVE_NEXT = (255, 255, 255)
 COLOR_DEAD = (0, 0, 0)
+
+random_percent_pop = 0.3
 
 def update(screen, cells, size, with_progress=False):
     n_rows, n_cols = cells.shape
@@ -55,7 +55,11 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((800, 600))
 
-    cells = np.zeros((60, 80))
+    total_cells = 60 * 80
+    alive_cells = int(total_cells * random_percent_pop)
+    cells_flat = np.concatenate([np.ones(alive_cells), np.zeros(total_cells - alive_cells)])
+    np.random.shuffle(cells_flat)
+    cells = cells_flat.reshape(60, 80)
 
     screen.fill(COLOR_GRID)
     update(screen, cells, 10)
