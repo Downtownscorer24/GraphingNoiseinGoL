@@ -1,3 +1,12 @@
+# This version of the GoL attempts to combat noise
+# Each cell looks to see the predicted state of its 3x3 grid in the next generation
+# The cell determines if the 3x3 grid will be underpopulated, overpopulated, or normal
+# If the cell sees that it will be overpopulated, it decides to die
+# If the cell sees that it will be underpopulated, it decided to live on/become alive (although there are caveats
+# to the latter)
+# If the cell sees that it will be normal, its fate is determined by the fate it should have under standard GoL rules
+# This mitigates noise since now the cell is taking in a different decision-making process
+
 import time
 import pygame
 import numpy as np
@@ -11,7 +20,7 @@ COLOR_DEAD = (0, 0, 0)
 COLOR_TEXT = (255, 255, 255)
 
 MAX_GENERATIONS = 256
-REPEAT_TIMES = 16
+REPEAT_TIMES = 5
 noise = 0.5
 
 
@@ -27,29 +36,6 @@ def get_neighbor_counts(cells):
 
     return convolve(cells, kernel, mode='wrap')
 
-
-def get_extended_neighbor_counts(cells, x, y):
-    """
-    Given a cell at position (x, y), get its neighbor count and the neighbor counts of its 8 neighbors.
-    This function returns a 3x3 matrix where the central element is the neighbor count of the cell at (x, y),
-    and the other elements are the neighbor counts of its neighbors.
-    """
-    # Shape of the input grid
-    m, n = cells.shape
-
-    # Helper function to compute the coordinates wrapping around the edges
-    wrap = lambda x, max_val: (x + max_val) % max_val
-
-    # Compute the extended neighbor counts for the given cell
-    counts = get_neighbor_counts(cells)
-    extended_counts = np.zeros((3, 3), dtype=int)
-    for i in range(-1, 2):
-        for j in range(-1, 2):
-            extended_counts[i + 1, j + 1] = counts[wrap(x + i, m), wrap(y + j, n)]
-
-    return extended_counts
-
-
 def predict_future_state(cells):
     """
     Predict the future state of the grid based on the standard GoL rules.
@@ -63,6 +49,7 @@ def predict_future_state(cells):
 
     alive = np.clip(alive + noise_values, 0, 8)
 
+    # the cell's future state is calculated
     future_state = np.where(((cells == 1) & ((alive == 2) | (alive == 3))) |
                             ((cells == 0) & (alive == 3)), 1, 0)
     return future_state
@@ -88,7 +75,7 @@ def update(cells):
     # Apply the new rules based on the predicted number of alive cells
     next_state = np.where(
         # Rules for dead cells
-        (cells == 0) & (alive_next_timestep == 2), 1,
+        (cells == 0) & (alive_next_timestep == 3), 1,
         np.where(
             # Rules for alive cells when 0 <= alive_next_timestep <= 3
             (cells == 1) & (2 <= alive_next_timestep) & (alive_next_timestep <= 3), 1,
