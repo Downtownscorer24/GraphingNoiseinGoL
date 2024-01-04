@@ -10,7 +10,7 @@ COLOR_DIE_NEXT = (170, 170, 170)
 COLOR_ALIVE_NEXT = (255, 255, 255)
 COLOR_DEAD = (0, 0, 0)
 
-noise = 0.01
+noise = .5
 
 def update(screen, cells, size, with_progress=False):
     n_rows, n_cols = cells.shape

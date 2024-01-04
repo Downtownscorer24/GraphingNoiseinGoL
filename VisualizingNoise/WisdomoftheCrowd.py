@@ -11,25 +11,36 @@ COLOR_DEAD = (0, 0, 0)
 COLOR_TEXT = (255, 255, 255)
 
 MAX_GENERATIONS = 256
-REPEAT_TIMES = 16
-noise = 0
+REPEAT_TIMES = 5
+noise = 0.5
+weight_1 = 0.8
+weight_2 = 0.2
+
 
 def update(cells, noise):
     kernel = np.array([[1, 1, 1],
                        [1, 0, 1],
                        [1, 1, 1]])
 
+    # Step 1: Calculate neighbor counts with noise
     alive = convolve(cells, kernel, mode='constant', cval=0)
-
     is_noised = np.random.random(cells.shape) < noise
     noise_values = np.random.choice([-1, 1], size=cells.shape)
     noise_values *= is_noised
-    alive = np.clip(alive + noise_values, 0, None)  # ensure alive neighbors can't be less than 0
+    alive = np.clip(alive + noise_values, 0, None)
 
-    updated_cells = np.where(((cells == 1) & ((alive < 2) | (alive > 3))) |
-                             ((cells == 0) & (alive != 3)), 0, 1)
+    # Step 2: Calculate mean of neighbors' neighbor counts
+    mean_neighbors_alive = convolve(alive, kernel, mode='constant', cval=0) / 8.0
+
+    # Step 3: Calculate the modified cell count
+    modified_cell_count = ((weight_1 * alive) ** 2 + weight_2 * mean_neighbors_alive) ** 0.5
+
+    # Step 4: Decide the fate of the cell based on the modified cell count
+    updated_cells = np.where(((cells == 1) & ((modified_cell_count < 2) | (modified_cell_count > 3))) |
+                             ((cells == 0) & (modified_cell_count != 3)), 0, 1)
 
     return updated_cells
+
 
 def draw_grid(screen, size):
     for x in range(0, screen.get_width(), size):
