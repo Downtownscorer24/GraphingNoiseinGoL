@@ -10,7 +10,7 @@ COLOR_DIE_NEXT = (170, 170, 170)
 COLOR_ALIVE_NEXT = (255, 255, 255)
 COLOR_DEAD = (0, 0, 0)
 
-random_percent_pop = 1/3
+random_percent_pop = 1/4
 
 def update(screen, cells, size, with_progress=False):
     n_rows, n_cols = cells.shape

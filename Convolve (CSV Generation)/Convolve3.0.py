@@ -8,7 +8,7 @@ import csv
 import io
 import multiprocessing
 
-n_trials = 32
+n_trials = 100
 n_generations = 256
 grid_size = 64
 
