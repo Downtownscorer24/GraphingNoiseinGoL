@@ -53,7 +53,7 @@ def process_combination(params):
         # Create a 64x64 grid of zeros
         cells = np.zeros((grid_size, grid_size))
 
-        # Place the 3x3 combination in the middle of the 59x59 grid
+        # Place the 3x3 combination in the middle of the 64x64 grid
         start_row = start_col = (grid_size - 3) // 2
         cells[start_row:start_row + 3, start_col:start_col + 3] = combination
 
