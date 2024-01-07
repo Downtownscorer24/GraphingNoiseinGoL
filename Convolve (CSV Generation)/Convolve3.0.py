@@ -14,7 +14,7 @@ grid_size = 64
 
 # Generate all possible 3x3 combinations
 combinations = list(itertools.product([0, 1], repeat=9))
-combinations = [np.array(comb).reshape((3, 3)) for comb in combinations[:4]]
+combinations = [np.array(comb).reshape((3, 3)) for comb in combinations]
 
 def binary_matrix_to_decimal(matrix):
     # Flatten the matrix into a 1D array
