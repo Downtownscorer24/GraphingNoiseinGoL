@@ -8,8 +8,8 @@ import csv
 import io
 
 noise = 0.5
-n_trials = 20
-n_generations = 250
+n_trials =32
+n_generations = 256
 
 # Generate all possible 3x3 combinations
 combinations = list(itertools.product([0, 1], repeat=9))
@@ -49,10 +49,10 @@ def process_combination(combination):
     sums = []
     for _ in range(n_trials):
         # Create a 59x59 grid of zeros
-        cells = np.zeros((59, 59))
+        cells = np.zeros((64, 64))
 
         # Place the 3x3 combination in the middle of the 59x59 grid
-        start_row = start_col = (59 - 3) // 2
+        start_row = start_col = (64 - 3) // 2
         cells[start_row:start_row + 3, start_col:start_col + 3] = combination
 
         for _ in range(n_generations):
