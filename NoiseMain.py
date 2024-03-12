@@ -14,8 +14,8 @@ COLOR_DIE_NEXT = (170, 170, 170)
 COLOR_ALIVE_NEXT = (255, 255, 255)
 COLOR_DEAD = (0, 0, 0)
 
-noise_probability = 0.5
-random_percent_pop = 0.25
+noise_probability = 0
+random_percent_pop = 0.3
 
 def apply_noise(cells, noise_probability):
     noise_mask = np.random.rand(*cells.shape) < noise_probability

@@ -16,7 +16,7 @@ SCREEN_HEIGHT = 600
 
 FONT_SIZE = 15  # Reduced font size for the neighbor count matrix.
 
-noise = 1
+noise = 0
 
 def update(cells, noise):
     kernel = np.array([[1, 1, 1],
