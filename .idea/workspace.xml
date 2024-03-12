@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f2de0424-1c20-4c54-8ecc-4d3a5956cac2" name="Changes" comment="Update Project">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Convolve (CSV Generation)/Convolve2.0.py" beforeDir="false" afterPath="$PROJECT_DIR$/Convolve (CSV Generation)/Convolve2.0.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Convolve (CSV Generation)/Convolve3.0.py" beforeDir="false" afterPath="$PROJECT_DIR$/Convolve (CSV Generation)/Convolve3.0.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csvs/output1-2024-01-07.csv" beforeDir="false" afterPath="$PROJECT_DIR$/csvs/output1-2024-01-07.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,28 +35,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Convolve2.0.executor": "Run",
-    "Python.Convolve3.0.executor": "Run",
-    "Python.Graph.executor": "Run",
-    "Python.Initial Configs.executor": "Run",
-    "Python.MaxPopulation.executor": "Run",
-    "Python.NoiseMain.executor": "Run",
-    "Python.NoiseMainGraph.executor": "Run",
-    "Python.Regression1.0.executor": "Run",
-    "Python.Regression2.0.executor": "Run",
-    "Python.SmartCells.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/lab/PycharmProjects/GraphingNoiseinGo/Graphs",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Convolve2.0.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Convolve3.0.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Graph.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Initial Configs.executor&quot;: &quot;Run&quot;,
+    &quot;Python.MaxPopulation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.NoiseMain.executor&quot;: &quot;Run&quot;,
+    &quot;Python.NoiseMainGraph.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Regression1.0.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Regression2.0.executor&quot;: &quot;Run&quot;,
+    &quot;Python.SmartCells.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/lab/PycharmProjects/GraphingNoiseinGo/Graphs&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\lab\PycharmProjects\GraphingNoiseinGo\Graphs" />
@@ -71,7 +70,7 @@
       <recent name="C:\Users\lab\PycharmProjects\GraphingNoiseinGo\Convolve (CSV Generation)" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
     <configuration name="NoiseMain" type="PythonConfigurationType" factoryName="Python">
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -298,7 +297,23 @@
       <option name="project" value="LOCAL" />
       <updated>1704648300992</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Update Project">
+      <option name="closed" value="true" />
+      <created>1704921541547</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1704921541547</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Update Project">
+      <option name="closed" value="true" />
+      <created>1704921907303</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1704921907303</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
