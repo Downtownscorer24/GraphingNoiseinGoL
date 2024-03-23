@@ -5,12 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2de0424-1c20-4c54-8ecc-4d3a5956cac2" name="Changes" comment="Update Project">
-      <change afterPath="$PROJECT_DIR$/csvs/GoLCorrelations.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csvs/GolCorrelations.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/100TrialsGraphs/493Chi-Square.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/100TrialsGraphs/AllCombinations.png" beforeDir="false" afterPath="$PROJECT_DIR$/100TrialsGraphs/AllCombinations.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/100TrialsGraphs/Combo33(LowestSD).png" beforeDir="false" afterPath="$PROJECT_DIR$/100TrialsGraphs/Combo33(LowestSD).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/100TrialsGraphs/Combo493(HighestSD).png" beforeDir="false" afterPath="$PROJECT_DIR$/100TrialsGraphs/Combo493(HighestSD).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/100TrialsGraphs/ComparingMean,Lowest,Highest.png" beforeDir="false" afterPath="$PROJECT_DIR$/100TrialsGraphs/ComparingMean,Lowest,Highest.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Convolve (CSV Generation)/Convolve3.0.py" beforeDir="false" afterPath="$PROJECT_DIR$/Convolve (CSV Generation)/Convolve3.0.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NoiseMain.py" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseMain.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VisualizingNoise/VisualizingNoise3.0.py" beforeDir="false" afterPath="$PROJECT_DIR$/VisualizingNoise/VisualizingNoise3.0.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/csvs/100Trials.csv" beforeDir="false" afterPath="$PROJECT_DIR$/csvs/100Trials.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csvs/GolCorrelations.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/csvs/GolCorrelations.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +57,7 @@
     "Python.Regression2.0.executor": "Run",
     "Python.SmartCells.executor": "Run",
     "Python.VisualizingNoise3.0.executor": "Run",
+    "Python.VisualizingNoise4.0.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -326,7 +332,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710265832831</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Update Project">
+      <option name="closed" value="true" />
+      <created>1710276980310</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1710276980310</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

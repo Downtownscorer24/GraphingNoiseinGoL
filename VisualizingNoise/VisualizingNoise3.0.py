@@ -25,14 +25,17 @@ def update(cells, noise):
 
     alive = convolve(cells, kernel, mode='constant', cval=0)
 
+    # Apply noise directly here, so it affects 'alive' before we make decisions
     is_noised = np.random.random(cells.shape) < noise
     noise_values = np.random.choice([-1, 1], size=cells.shape)
     noise_values *= is_noised
     alive = np.clip(alive + noise_values, 0, None)  # ensure alive neighbors can't be less than 0
 
+    # Determine the new state of cells based on rules and noise-affected neighbors
     updated_cells = np.where(((cells == 1) & ((alive < 2) | (alive > 3))) |
                              ((cells == 0) & (alive != 3)), 0, 1)
 
+    # Return both the updated state and the 'alive' matrix which now corresponds exactly to this update
     return updated_cells, alive
 
 def draw_grid(screen, size):
@@ -139,18 +142,14 @@ def main():
                     # Push the current state to history before updating
                     history.append((np.copy(cells), neighbor_matrix.copy(), generation))
 
-                    cells,_ = update(cells, noise)
-
-                    _, neighbor_matrix = update(cells, noise)
+                    cells,neighbor_matrix = update(cells, noise)
 
                     generation += 1
 
-                    render_neighbor_matrix(screen, neighbor_matrix, cells, 10, 800)
-
-                    pygame.display.update()
-
                     # After handling events, render both grids:
                     render(screen, cells, 10, generation)
+
+                    render_neighbor_matrix(screen, neighbor_matrix, cells, 10, 800)
 
                     pygame.display.update()
 
