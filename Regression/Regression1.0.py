@@ -40,11 +40,8 @@ def update(cells, noise_probability):
     # Calculate Sum of Neighbors' Noised Neighbor Counts
     neighbors_noised_neighbor_sum = calculate_neighbors(noised_neighbor_count)
 
-    # Regression Model (noised neighbor count, neighbors' noised neighbor counts, noise level ---> guess)
-    #true_neighbor_count = -0.0447713734307326 + 0.407165590149942 * noised_neighbor_count + 0.0830249042956387 * neighbors_noised_neighbor_sum - 0.419004103993928 * noise_probability
-
     # Regression Model (noised neighbor count, neighbors' noised neighbor counts ---> guess)
-    true_neighbor_count = -0.236028491845496 + 0.406401047839722 * noised_neighbor_count + 0.078265356869915 * neighbors_noised_neighbor_sum
+    true_neighbor_count = -0.068 + 0.803 * noised_neighbor_count
 
     # Ensure true_neighbor_count is within valid range [0, 8] and round to nearest integer
     true_neighbor_count = np.round(np.clip(true_neighbor_count, 0, 8)).astype(int)

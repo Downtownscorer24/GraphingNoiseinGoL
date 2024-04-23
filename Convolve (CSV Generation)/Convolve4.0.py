@@ -7,6 +7,7 @@ from scipy.ndimage import convolve
 import csv
 import io
 import multiprocessing
+from scipy.signal import convolve2d
 
 n_trials = 100
 n_generations = 256
@@ -14,7 +15,7 @@ grid_size = 64
 
 # Generate all possible 3x3 combinations
 combinations = list(itertools.product([0, 1], repeat=9))
-combinations = [np.array(comb).reshape((3, 3)) for comb in combinations[:1]]
+combinations = [np.array(comb).reshape((3, 3)) for comb in combinations]
 
 def binary_matrix_to_decimal(matrix):
     # Flatten the matrix into a 1D array
@@ -28,23 +29,41 @@ def binary_matrix_to_decimal(matrix):
 
     return decimal
 
-def update(cells, noise):
+# Additional functions needed for the update logic
+def apply_noise(cells, noise_probability):
+    noise_mask = np.random.rand(*cells.shape) < noise_probability
+    noise_adjustment = np.where(noise_mask, np.random.choice([-1, 1], size=cells.shape), 0)
+    return noise_adjustment
+
+def calculate_neighbors(cells):
     kernel = np.array([[1, 1, 1],
                        [1, 0, 1],
                        [1, 1, 1]])
+    neighbor_sum = convolve2d(cells, kernel, mode='same', boundary='wrap')
+    return neighbor_sum
 
-    alive = convolve(cells, kernel, mode='constant', cval=0)
+# Modified update function with regression model logic
+def update(cells, noise_probability):
+    # Apply Noise
+    noise_adjustment = apply_noise(cells, noise_probability)
 
-    # "noise" modification
-    is_noised = np.random.random(cells.shape) < noise
-    noise_values = np.random.choice([-1, 1], size=cells.shape)
-    noise_values *= is_noised
-    alive = np.clip(alive + noise_values, 0, None)  # ensure alive neighbors can't be less than 0
+    # Calculate Noised Neighbor Count
+    noised_neighbor_count = calculate_neighbors(cells) + noise_adjustment
 
-    updated_cells = np.where(((cells == 1) & ((alive < 2) | (alive > 3))) |
-                             ((cells == 0) & (alive != 3)), 0, 1)
+    # Regression Model (noised neighbor count, neighbors' noised neighbor counts ---> guess)
+    true_neighbor_count = -0.068 + 0.803 * noised_neighbor_count
+
+    # Ensure true_neighbor_count is within valid range [0, 8] and round to nearest integer
+    true_neighbor_count = np.round(np.clip(true_neighbor_count, 0, 8)).astype(int)
+
+    # Game Logic with True Neighbor Count
+    updated_cells = np.zeros_like(cells)
+    birth = (true_neighbor_count == 3)
+    survive = ((true_neighbor_count == 2) | (true_neighbor_count == 3)) & (cells == 1)
+    updated_cells[birth | survive] = 1
 
     return updated_cells
+
 
 def process_combination(params):
     combination, noise = params
